@@ -9,7 +9,7 @@ const generatePlayerBoard =
       board.push(row);
     }
     return board;
-  };
+};
 
 const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) =>{
   const board = [];
@@ -29,16 +29,17 @@ const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) =>{
       board[randomRowIndex][randomColumnIndex] ='B';
       numberOfBombsPlaced++;
     }
-}
+  }
+};
 
-  const getNumberOfNeighborBombs = (bombBoard,rowIndex, columnIndex) =>{
+const getNumberOfNeighborBombs = (bombBoard,rowIndex, columnIndex) =>{
      const neighborOffsets =[[-1, -1], [-1, 0], [-1, 1], [0, 1], [0, 0],
      [0, 1], [1, -1], [1, 0], [1, 1]];
      const numberOfRows = bombBoard.length;
      const numberOfColumns = bombBoard[0].length;
      const numberOfBombs = 0;
        numberOffsets.forEach(offset =>{
-         const neighborRowIndex = rowIndex + offset[0];
+     const neighborRowIndex = rowIndex + offset[0];
          const neighborColumnIndex = columnIndex + offset[0];
           if (neighborRowIndex >= 0 && neighborRowIndex < numberOfRows &&
           neighborColumnIndex >= 0 && neighborColumnIndex < numberOfColumns){
@@ -46,36 +47,27 @@ const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) =>{
                  numberOfBombs ++;
                 }
              }
-
-       });
+           });
  return numberOfBombs;
+};
 
- const flipTile =(playerBoard, bombBoard, rowIndex, columnIndex)=>{
-      if (playerBoard[rowIndex][columnIndex] !==' ') {
-        console.log('This tile has already been flipped! ');
-        return
-      }
-      else if (bombBoard[rowIndex][columnIndex] !== 'B') {
-        playerBoard[rowIndex][columnIndex] ='B ';
-      }
-      else {
-        playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard,
-        rowIndex, columnIndex);
-      }
- }
-
-}
-
-
-  return board;
-  //Loop has potential to place bombs on existing bombs. Control Flow will fix
-
+const flipTile =(playerBoard, bombBoard, rowIndex, columnIndex)=>{
+     if (playerBoard[rowIndex][columnIndex] !==' ') {
+       console.log('This tile has already been flipped! ');
+       return
+     }
+     else if (bombBoard[rowIndex][columnIndex] !== 'B') {
+       playerBoard[rowIndex][columnIndex] ='B ';
+     }
+     else {
+       playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard,
+       rowIndex, columnIndex);
+     }
 };
 
 
 const printBoard = board =>{
   console.log(board.map(row => row.join(' | ')).join('\n'));
-
 };
 
 let playerBoard = generatePlayerBoard(3, 4);
@@ -85,7 +77,6 @@ console.log('Player Board: ');
 printBoard(playerBoard);
 console.log('Bomb Board: ');
 printBoard(bombBoard);
-// Error saying row 89 is undefined
-flipTile(playerBoard, bombBoard, 0, 0,);
+flipTile(playerBoard, bombBoard, 0, 0);
 console.log('Updated Player Board: ');
 printBoard(playerBoard);
