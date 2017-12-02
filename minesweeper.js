@@ -25,11 +25,12 @@ const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) =>{
   while (numberOfBombsPlaced < numberOfBombs){
     const randomRowIndex = Math.floor(Math.random() * numberOfRows);
     const randomColumnIndex = Math.floor(Math.random() * numberOfColumns);
-    if (board[randomRowIndex][randomColumnIndex] !== 'B'){
+    if (board[randomRowIndex][randomColumnIndex] === 'B'){
       board[randomRowIndex][randomColumnIndex] ='B';
       numberOfBombsPlaced++;
     }
   }
+  return board;
 };
 
 const getNumberOfNeighborBombs = (bombBoard,rowIndex, columnIndex) =>{
@@ -40,7 +41,10 @@ const getNumberOfNeighborBombs = (bombBoard,rowIndex, columnIndex) =>{
      const numberOfBombs = 0;
        numberOffsets.forEach(offset =>{
      const neighborRowIndex = rowIndex + offset[0];
-         const neighborColumnIndex = columnIndex + offset[0];
+         
+         // Changed offset to [1] below
+         
+         const neighborColumnIndex = columnIndex + offset[1];
           if (neighborRowIndex >= 0 && neighborRowIndex < numberOfRows &&
           neighborColumnIndex >= 0 && neighborColumnIndex < numberOfColumns){
              if (bombBoard[neighborRowIndex][neighborColumnIndex] == 'B'){
@@ -56,8 +60,8 @@ const flipTile =(playerBoard, bombBoard, rowIndex, columnIndex)=>{
        console.log('This tile has already been flipped! ');
        return
      }
-     else if (bombBoard[rowIndex][columnIndex] !== 'B') {
-       playerBoard[rowIndex][columnIndex] ='B ';
+     else if (bombBoard[rowIndex][columnIndex] === 'B') {
+       playerBoard[rowIndex][columnIndex] ='B';
      }
      else {
        playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard,
